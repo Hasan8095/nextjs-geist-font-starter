@@ -2,17 +2,24 @@
 
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker, NavProps } from "react-day-picker"
+import { DayPicker } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+
+interface NavProps {
+  nextMonth?: Date
+  previousMonth?: Date
+  onNextClick: () => void
+  onPreviousClick: () => void
+}
 
 function CustomNav({ nextMonth, previousMonth, onNextClick, onPreviousClick }: NavProps) {
   return (
     <div className="flex items-center gap-1">
       <button
         type="button"
-        onClick={(e) => onPreviousClick?.(e)}
+        onClick={() => onPreviousClick?.()}
         disabled={!previousMonth}
         className="size-7 bg-transparent p-0 opacity-50 hover:opacity-100"
       >
@@ -20,7 +27,7 @@ function CustomNav({ nextMonth, previousMonth, onNextClick, onPreviousClick }: N
       </button>
       <button
         type="button"
-        onClick={(e) => onNextClick?.(e)}
+        onClick={() => onNextClick?.()}
         disabled={!nextMonth}
         className="size-7 bg-transparent p-0 opacity-50 hover:opacity-100"
       >
@@ -81,9 +88,6 @@ function Calendar({
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
         ...classNames,
-      }}
-      components={{
-        Nav: CustomNav
       }}
       {...props}
     />
